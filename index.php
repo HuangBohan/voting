@@ -11,6 +11,6 @@
 	}
 	else {
 		processLogin();
-		echo showLogin();
+		echo showPage(showLogin());
 	}
 ?>
