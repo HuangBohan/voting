@@ -16,9 +16,21 @@
 		<html lang="en">
 			<head>
 				<title>Eusoff Hall Election System</title>
+
+				<link rel="stylesheet" type="text/css" href="includes/css/datepicker.min.css">
 				<link rel="stylesheet" type="text/css" href="includes/css/bootstrap.min.css">
-				<script src="includes/js/jquery-2.1.3.min.js"></script>
-				<script src="includes/js/bootstrap.min.js"></script>
+				
+				<script type="text/javascript" src="includes/js/jquery-2.1.0.min.js"></script>
+				<script type="text/javascript" src="includes/js/bootstrap.min.js"></script>
+				<script type="text/javascript" src="includes/js/moments.js"></script>
+				<script type="text/javascript" src="includes/js/bootstrap-datetimepicker.min.js"></script>
+				
+				<script type="text/javascript">
+				    $(function() {
+						$("#startDate").datetimepicker();
+						$("#endDate").datetimepicker();
+				    });
+				</script>
 			</head>
 			<body>
 				<div class="container">
@@ -53,12 +65,13 @@ FOOTER;
 						<form action="" method=POST>
 							<input type="hidden" name="openid_identifier" value="https://openid.nus.edu.sg">
 							<div style="text-align:center; margin: 20px">
-								<button class="btn btn-default"><span style="font-size:20px">Login with NUS OpenID</span></button>
+								<button class="btn btn-default"><span style="font-size:20px">Login with NUS ID</span></button>
 							</div>
 						</form>
 					</div>
 					<div role="tabpanel" class="tab-pane" id="admin">
 						<form class="form-inline" action="" method=POST>
+							<input type="hidden" name="login" value="admin">
 							<div style="text-align:center; margin: 20px">
 								<div class="form-group">
 									<label class="sr-only" for="pwd">Password</label>
@@ -102,7 +115,44 @@ LOGIN;
 	}
 
 	function showNewSession() {
-
+		return <<<NEW_SESSION
+		<div class="row">
+			<div class="col-md-12">
+				<form>
+					<div class="row">
+						<div class="form-group col-md-6">
+						    <label for="session-name">Session Name</label>
+						    <input type="text" class="form-control" id="session-name" placeholder="Enter session name">
+						</div>
+					</div>
+						
+					<p class="help-block">Election session submission open and close date.</p>
+					<div class="row">
+						<div class="form-group col-md-4">
+							<label for="open-date">Open Date</label>
+						  	<div class="input-group date" id="startDate">
+							  	<input type="text" class="form-control" id="open-date" name="startDate">
+							  	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+							</div>
+						</div>
+						<div class="form-group col-md-4 col-md-offset-1">
+							<label for="close-date">Close Date</label>
+						  	<div class="input-group date" id="endDate">
+						  		<input type="text" class="form-control" id="close-date" name="endDate">
+						  		<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						  	</div>
+						</div>
+					</div>
+					<div class="checkbox">
+					  <label>
+					    
+					  </label>
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+				</form>
+			</div>
+		</div>
+NEW_SESSION;
 	}
 
 ?>
