@@ -114,8 +114,38 @@ LOGIN;
 		}	
 	}
 
+	function showAddButton() {
+		
+	}
+
+	function showNewPosition() {
+		return <<<NEW_POSITION
+		<div class="col-md-2" style="border: 1px solid #e1e1e8; border-radius: 4px; margin: 0 15px 15px 15px">
+			<div class="form-group">
+				<label for="position-name">Position Name</label>
+				<input type="text" class="form-control" id="position-name">
+			</div>
+			<div class="form-group">
+				<label for="position-slots">Number of slot</label>
+				<input type="text" class="form-control" id="position-slots">
+			</div>
+			<div class="form-group">
+				<label for="position-voter">Who can vote</label>
+				<select class="form-control" id="position-voter">
+					<option>All Residents</option>
+					<option>A Block</option>
+					<option>B Block</option>
+					<option>C Block</option>
+					<option>D Block</option>
+					<option>E Block</option>
+				</select>
+			</div>
+		</div>
+NEW_POSITION;
+	}
+
 	function showNewSession() {
-		return <<<NEW_SESSION
+		$output = <<<NEW_SESSION
 		<div class="row">
 			<div class="col-md-12">
 				<form>
@@ -143,16 +173,20 @@ LOGIN;
 						  	</div>
 						</div>
 					</div>
-					<div class="checkbox">
-					  <label>
-					    
-					  </label>
+					<p class="help-block">Add New Position</p>
+					<div class="row">
+NEW_SESSION;
+		
+		$output .= showNewPosition();
+		$output .= <<<NEW_SESSION
 					</div>
 					<button type="submit" class="btn btn-default">Submit</button>
 				</form>
 			</div>
 		</div>
 NEW_SESSION;
+
+		return $output;
 	}
 
 ?>
