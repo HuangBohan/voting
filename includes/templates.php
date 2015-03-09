@@ -114,13 +114,17 @@ LOGIN;
 		}	
 	}
 
-	function showAddButton() {
-		
+	function showAddPositionButton() {
+		return <<<ADD_BUTTON
+		<div class="col-md-2" style="margin: 0 15px">
+			<button class="btn btn-default">Add New Position</button>
+		</div>
+ADD_BUTTON;
 	}
 
 	function showNewPosition() {
 		return <<<NEW_POSITION
-		<div class="col-md-2" style="border: 1px solid #e1e1e8; border-radius: 4px; margin: 0 15px 15px 15px">
+		<div class="col-md-2" style="border: 1px solid #e1e1e8; border-radius: 4px; margin: 0 15px">
 			<div class="form-group">
 				<label for="position-name">Position Name</label>
 				<input type="text" class="form-control" id="position-name">
@@ -178,8 +182,10 @@ NEW_POSITION;
 NEW_SESSION;
 		
 		$output .= showNewPosition();
+		$output .= showAddPositionButton();
 		$output .= <<<NEW_SESSION
 					</div>
+					<hr>
 					<button type="submit" class="btn btn-default">Submit</button>
 				</form>
 			</div>
