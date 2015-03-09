@@ -108,34 +108,34 @@ LOGIN;
 		}	
 	}
 
-	function showAddButton($label) {
+	function showAddButton($label, $id) {
 		return <<<ADD_BUTTON
 		<div class="col-md-2" style="margin: 0 15px">
-			<button class="btn btn-default">$label</button>
+			<button class="btn btn-default" id="$id">$label</button>
 		</div>
 ADD_BUTTON;
 	}
 
 	function showNewPosition() {
 		return <<<NEW_POSITION
-		<div class="col-md-2" style="border: 1px solid #e1e1e8; border-radius: 4px; margin: 0 15px">
+		<div class="position-template col-md-2" style="border: 1px solid #e1e1e8; border-radius: 4px; margin: 0 15px">
 			<div class="form-group">
-				<label for="position-name">Position Name</label>
-				<input type="text" class="form-control" id="position-name">
+				<label for="position-name-0">Position Name</label>
+				<input type="text" class="form-control" id="position-name-0">
 			</div>
 			<div class="form-group">
-				<label for="position-slots">Number of slot</label>
-				<input type="text" class="form-control" id="position-slots">
+				<label for="position-slot-0">Number of slot</label>
+				<input type="text" class="form-control" id="position-slot-0">
 			</div>
 			<div class="form-group">
-				<label for="position-voter">Who can vote</label>
-				<select class="form-control" id="position-voter">
-					<option>All Residents</option>
-					<option>A Block</option>
-					<option>B Block</option>
-					<option>C Block</option>
-					<option>D Block</option>
-					<option>E Block</option>
+				<label for="position-voter-0">Who can vote</label>
+				<select class="form-control" id="position-voter-0">
+					<option value="-">All Residents</option>
+					<option value="A">A Block</option>
+					<option value="B">B Block</option>
+					<option value="C">C Block</option>
+					<option value="D">D Block</option>
+					<option value="E">E Block</option>
 				</select>
 			</div>
 		</div>
@@ -162,7 +162,7 @@ NEW_CANDIDATE;
 
 	function showCandidateRow() {
 		$candidate = showNewCandidate();
-		$addButton = showAddButton("Add new Candidate");
+		$addButton = showAddButton("Add new Candidate", "add-candidate");
 		$output = <<<CANDIDATE_ROW
 		<hr>
 		<div class="row">
@@ -208,11 +208,11 @@ CANDIDATE_ROW;
 						</div>
 					</div>
 					<p class="help-block">Add New Position</p>
-					<div class="row">
+					<div class="position-list row">
 NEW_SESSION;
 		
 		$output .= showNewPosition();
-		$output .= showAddButton("Add New Position");
+		$output .= showAddButton("Add New Position", "add-position");
 		$output .= "</div>";
 
 		$output .= showCandidateRow();
