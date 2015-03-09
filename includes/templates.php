@@ -23,18 +23,8 @@
 				<script type="text/javascript" src="includes/js/jquery-2.1.0.min.js"></script>
 				<script type="text/javascript" src="includes/js/bootstrap.min.js"></script>
 				<script type="text/javascript" src="includes/js/moments.js"></script>
-				<script type="text/javascript" src="includes/js/bootstrap-datetimepicker.min.js"></script>
-				
-				<script type="text/javascript">
-				    $(function() {
-						$("#startDate").datetimepicker();
-						$("#endDate").datetimepicker();
-
-						$("#position-name").on("input", function() {
-							$("#position-name-header").text($(this).val());
-						});
-				    });
-				</script>
+				<script type="text/javascript" src="includes/js/bootstrap-datetimepicker.min.js"></script>		
+				<script type="text/javascript" src="includes/js/application.js"></script>
 			</head>
 			<body>
 				<div class="container">
