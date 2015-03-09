@@ -29,6 +29,10 @@
 				    $(function() {
 						$("#startDate").datetimepicker();
 						$("#endDate").datetimepicker();
+
+						$("#position-name").on("input", function() {
+							$("#position-name-header").text($(this).val());
+						});
 				    });
 				</script>
 			</head>
@@ -114,10 +118,10 @@ LOGIN;
 		}	
 	}
 
-	function showAddPositionButton() {
+	function showAddButton($label) {
 		return <<<ADD_BUTTON
 		<div class="col-md-2" style="margin: 0 15px">
-			<button class="btn btn-default">Add New Position</button>
+			<button class="btn btn-default">$label</button>
 		</div>
 ADD_BUTTON;
 	}
@@ -146,6 +150,42 @@ ADD_BUTTON;
 			</div>
 		</div>
 NEW_POSITION;
+	}
+
+	function showNewCandidate() {
+		return <<<NEW_CANDIDATE
+		<div class="col-md-2" style="border: 1px solid #e1e1e8; border-radius: 4px; margin: 0 15px; overflow: hidden;">
+			<div style="margin: 5px">
+				<img src="includes/image/default.jpg" alt="Profile Image" width=150 height=150>
+			</div>
+			<div class="form-group">
+				<label for="candidate-matric">Candidate Matric</label>
+				<input type="text" class="form-control" id="candidate-candidate">
+			</div>
+			<div class="form-group">
+			    <label for="candidate-photo">Upload photo</label>
+			    <input type="file" id="candidate-photo">
+			</div>
+		</div>
+NEW_CANDIDATE;
+	}
+
+	function showCandidateRow() {
+		$candidate = showNewCandidate();
+		$addButton = showAddButton("Add new Candidate");
+		$output = <<<CANDIDATE_ROW
+		<hr>
+		<div class="row">
+			<h3 id="position-name-header" style="text-align: center"></h3>
+		</div>
+		<div class="row">
+			$candidate
+			$addButton
+		</div>
+		<hr>
+CANDIDATE_ROW;
+		
+		return $output;
 	}
 
 	function showNewSession() {
@@ -182,10 +222,12 @@ NEW_POSITION;
 NEW_SESSION;
 		
 		$output .= showNewPosition();
-		$output .= showAddPositionButton();
+		$output .= showAddButton("Add New Position");
+		$output .= "</div>";
+
+		$output .= showCandidateRow();
 		$output .= <<<NEW_SESSION
 					</div>
-					<hr>
 					<button type="submit" class="btn btn-default">Submit</button>
 				</form>
 			</div>
