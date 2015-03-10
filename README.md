@@ -1,6 +1,7 @@
 # voting
 Eusoff Hall Election System
 
+
 ## How to setup
 1. update `includes/config.inc` with your database parameters
 2. start your `apache` and `mysql` server
