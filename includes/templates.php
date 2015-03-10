@@ -150,11 +150,11 @@ NEW_POSITION;
 			</div>
 			<div class="form-group">
 				<label for="candidate-matric-0-0">Candidate Matric</label>
-				<input type="text" class="form-control" id="candidate-candidate-0">
+				<input type="text" class="form-control" id="candidate-matric-0-0">
 			</div>
 			<div class="form-group">
 			    <label for="candidate-photo-0-0">Upload photo</label>
-			    <input type="file" id="candidate-photo-0">
+			    <input type="file" id="candidate-photo-0-0">
 			</div>
 		</div>
 NEW_CANDIDATE;

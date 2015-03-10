@@ -3,8 +3,6 @@ $(function() {
 	var canTemplate = $(".candidate-template").first().clone();
 	var canRowTemplate = $(".candidate-row-template").first().clone();
 
-	console.log(canRowTemplate);
-
 	$("#startDate").datetimepicker();
 	$("#endDate").datetimepicker();
 
@@ -12,22 +10,30 @@ $(function() {
 		event.preventDefault();
 
 		var positionList = $(".position-template");
+		var canRowList = $(".candidate-row-template");
 		if(positionList.length < 4) {
 			var newPos = posTemplate.clone();
 			var newCanRow = canRowTemplate.clone();
 
-			// update all id fileds
-			var oldId 	= positionList.length - 1;
+			// update all id fileds for new position
 			var newId 	= positionList.length;
-			newPos.find("#position-name-" + oldId).attr("id", "position-name-" + newId);
-			newPos.find("#position-slot-" + oldId).attr("id", "position-slot-" + newId);
-			newPos.find("#position-voter-" + oldId).attr("id", "position-voter-" + newId);
-			newPos.find("[for=position-name-" + oldId + "]").attr("for", "position-name-" + newId);
-			newPos.find("[for=position-slot-" + oldId + "]").attr("for", "position-slot-" + newId);
-			newPos.find("[for=position-voter-" + oldId + "]").attr("for", "position-voter-" + newId);
-			$(".position-template").last().after(newPos);	
+			newPos.find("#position-name-0").attr("id", "position-name-" + newId);
+			newPos.find("#position-slot-0").attr("id", "position-slot-" + newId);
+			newPos.find("#position-voter-0").attr("id", "position-voter-" + newId);
+			newPos.find("[for=position-name-0]").attr("for", "position-name-" + newId);
+			newPos.find("[for=position-slot-0]").attr("for", "position-slot-" + newId);
+			newPos.find("[for=position-voter-0]").attr("for", "position-voter-" + newId);
+			positionList.last().after(newPos);	
 
-			$(".candidate-row-template").last().after(newCanRow);
+			// update all id fields for new candidate row
+			newId = canRowList.length;
+			newCanRow.attr("id", "position-" + newId); 
+			newCanRow.find("[id*=candidate-matric-0]").attr("id", "candidate-matric-" + newId + "-0]");
+			newCanRow.find("[id*=candidate-photo-0]").attr("id", "candidate-photo-" + newId + "-0]");
+			newCanRow.find("[for*=candidate-matric-0]").attr("for", "candidate-matric-" + newId + "-0]");
+			newCanRow.find("[for*=candidate-photo-0]").attr("for", "candidate-photo-" + newId + "-0]");
+			console.log(newCanRow);
+			canRowList.last().after(newCanRow);
 		}
 		
 	});
