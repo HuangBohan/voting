@@ -28,10 +28,10 @@ $(function() {
 			// update all id fields for new candidate row
 			newId = canRowList.length;
 			newCanRow.attr("id", "position-" + newId); 
-			newCanRow.find("[id*=candidate-matric-0]").attr("id", "candidate-matric-" + newId + "-0]");
-			newCanRow.find("[id*=candidate-photo-0]").attr("id", "candidate-photo-" + newId + "-0]");
-			newCanRow.find("[for*=candidate-matric-0]").attr("for", "candidate-matric-" + newId + "-0]");
-			newCanRow.find("[for*=candidate-photo-0]").attr("for", "candidate-photo-" + newId + "-0]");
+			newCanRow.find("[id*=candidate-matric-0]").attr("id", "candidate-matric-" + newId + "]");
+			newCanRow.find("[id*=candidate-photo-0]").attr("id", "candidate-photo-" + newId + "]");
+			newCanRow.find("[for*=candidate-matric-0]").attr("for", "candidate-matric-" + newId + "]");
+			newCanRow.find("[for*=candidate-photo-0]").attr("for", "candidate-photo-" + newId + "]");
 			canRowList.last().after(newCanRow);
 
 			initAddCandidateButtons(canTemplate);
@@ -49,11 +49,21 @@ $(function() {
 function initAddCandidateButtons (canTemplate) {
 	$(".add-candidate").click(function(event) {
 		event.preventDefault();
-		var tmp = canTemplate.clone();
-		var canList = $(this).parent().parent().find(".candidate-template");
-		
+		var tmpCan = canTemplate.clone();
+		var canRow = $(this).parent().parent();
+		var canList = canRow.find(".candidate-template");
+
+		var posId = $(".candidate-row-template").length;
+
 		if(canList.length < 4) {
-			canList.last().after(tmp);
+			// update ids for new candidate
+			var newId = canList.length;
+			tmpCan.find("[id*=candidate-matric-]").attr("id", "candidate-matric-" + posId + "-" + newId + "]");
+			tmpCan.find("[id*=candidate-photo-]").attr("id", "candidate-photo-" + posId + "-" + newId + "]");
+			tmpCan.find("[for*=candidate-matric-]").attr("for", "candidate-matric-" + posId + "-" + newId + "]");
+			tmpCan.find("[for*=candidate-photo-]").attr("for", "candidate-photo-" + posId + "-" + newId + "]");
+			
+			canList.last().after(tmpCan);
 		}
 	});
 }
