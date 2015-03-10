@@ -6,7 +6,7 @@ $(function() {
 	$("#startDate").datetimepicker();
 	$("#endDate").datetimepicker();
 
-	$("#add-position").click(function(event) {
+	$(".add-position").click(function(event) {
 		event.preventDefault();
 
 		var positionList = $(".position-template");
@@ -32,18 +32,26 @@ $(function() {
 			newCanRow.find("[id*=candidate-photo-0]").attr("id", "candidate-photo-" + newId + "-0]");
 			newCanRow.find("[for*=candidate-matric-0]").attr("for", "candidate-matric-" + newId + "-0]");
 			newCanRow.find("[for*=candidate-photo-0]").attr("for", "candidate-photo-" + newId + "-0]");
-			console.log(newCanRow);
 			canRowList.last().after(newCanRow);
+
+			initAddCandidateButtons(canTemplate);
 		}
 		
 	});
 
-	$("#add-candidate").click(function(event) {
-		event.preventDefault();
-		var candidateList = $(".row candidate-templdate");
-	});
+	initAddCandidateButtons(canTemplate);
 
 	$("#position-name").on("input", function() {
 		$("#position-name-header").text($(this).val());
 	});
 });
+
+function initAddCandidateButtons (canTemplate) {
+	$(".add-candidate").click(function(event) {
+		event.preventDefault();
+		var tmp = canTemplate.clone();
+		var canList = $(this).parent().parent().find(".candidate-template");
+		
+		canList.last().after(tmp);
+	});
+}

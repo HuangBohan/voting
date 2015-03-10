@@ -108,10 +108,10 @@ LOGIN;
 		}	
 	}
 
-	function showAddButton($label, $id) {
+	function showAddButton($label, $class) {
 		return <<<ADD_BUTTON
 		<div class="col-md-2" style="margin: 0 15px">
-			<button class="btn btn-default" id="$id">$label</button>
+			<button class="$class btn btn-default">$label</button>
 		</div>
 ADD_BUTTON;
 	}
@@ -144,7 +144,7 @@ NEW_POSITION;
 
 	function showNewCandidate() {
 		return <<<NEW_CANDIDATE
-		<div class="candidate-templdate col-md-2" style="border: 1px solid #e1e1e8; border-radius: 4px; margin: 0 15px; overflow: hidden;">
+		<div class="candidate-template col-md-2" style="border: 1px solid #e1e1e8; border-radius: 4px; margin: 0 15px; overflow: hidden;">
 			<div style="margin: 5px">
 				<img src="includes/image/default.jpg" alt="Profile Image" width=150 height=150>
 			</div>
@@ -164,8 +164,8 @@ NEW_CANDIDATE;
 		$candidate = showNewCandidate();
 		$addButton = showAddButton("Add new Candidate", "add-candidate");
 		$output = <<<CANDIDATE_ROW
-		<hr>
 		<div class="candidate-row-template" id="position-0">
+			<hr>
 			<div class="row">
 				<h3 id="position-name-header" style="text-align: center"></h3>
 			</div>
@@ -173,8 +173,8 @@ NEW_CANDIDATE;
 				$candidate
 				$addButton
 			</div>
+			<hr>
 		</div>
-		<hr>
 CANDIDATE_ROW;
 		
 		return $output;
