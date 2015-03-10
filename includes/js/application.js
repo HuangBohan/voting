@@ -35,10 +35,13 @@ $(function() {
 			canRowList.last().after(newCanRow);
 
 			initAddCandidateButtons(canTemplate);
+
+			initPreviewPhoto();
 		}
 		
 	});
 
+	initPreviewPhoto();
 	initAddCandidateButtons(canTemplate);
 
 	$("#position-name").on("input", function() {
@@ -64,6 +67,17 @@ function initAddCandidateButtons (canTemplate) {
 			tmpCan.find("[for*=candidate-photo-]").attr("for", "candidate-photo-" + posId + "-" + newId + "]");
 			
 			canList.last().after(tmpCan);
+			initPreviewPhoto();
 		}
 	});
 }
+
+function initPreviewPhoto() {
+	$("[id*=candidate-photo-]").change(function(event) {
+		var imgDiv = $(this).parent().parent().find("img");
+		if(this.files && this.files[0]) {
+			imgDiv.attr("src", URL.createObjectURL(event.target.files[0]));
+		}
+	});
+}
+
