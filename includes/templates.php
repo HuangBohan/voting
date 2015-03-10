@@ -167,7 +167,7 @@ NEW_CANDIDATE;
 		<div class="candidate-row-template" id="position-0">
 			<hr>
 			<div class="row">
-				<h3 id="position-name-header" style="text-align: center"></h3>
+				<h3 id="position-header-0" style="text-align: center"></h3>
 			</div>
 			<div class="row">
 				$candidate

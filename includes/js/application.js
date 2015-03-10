@@ -28,20 +28,22 @@ $(function() {
 			// update all id fields for new candidate row
 			newId = canRowList.length;
 			newCanRow.attr("id", "position-" + newId); 
-			newCanRow.find("[id*=candidate-matric-0]").attr("id", "candidate-matric-" + newId + "]");
-			newCanRow.find("[id*=candidate-photo-0]").attr("id", "candidate-photo-" + newId + "]");
-			newCanRow.find("[for*=candidate-matric-0]").attr("for", "candidate-matric-" + newId + "]");
-			newCanRow.find("[for*=candidate-photo-0]").attr("for", "candidate-photo-" + newId + "]");
+			newCanRow.find("[id*=position-header-0]").attr("id", "position-header-" + newId);
+			newCanRow.find("[id*=candidate-matric-0]").attr("id", "candidate-matric-" + newId);
+			newCanRow.find("[id*=candidate-photo-0]").attr("id", "candidate-photo-" + newId);
+			newCanRow.find("[for*=candidate-matric-0]").attr("for", "candidate-matric-" + newId);
+			newCanRow.find("[for*=candidate-photo-0]").attr("for", "candidate-photo-" + newId);
 			canRowList.last().after(newCanRow);
 
-			initAddCandidateButtons(canTemplate);
-
 			initPreviewPhoto();
+			bindPositionHeader();
+			initAddCandidateButtons(canTemplate);
 		}
 		
 	});
 
 	initPreviewPhoto();
+	bindPositionHeader();
 	initAddCandidateButtons(canTemplate);
 
 	$("#position-name").on("input", function() {
@@ -80,4 +82,17 @@ function initPreviewPhoto() {
 		}
 	});
 }
+
+function bindPositionHeader() {
+	$("[id*=position-name-]").each(function() {
+		var posId = $(this).attr("id").split("-");
+		posId = posId[2];
+		
+		$(this).on("input", function() {
+			$("#position-header-" + posId).text($(this).val());
+		});
+	});
+}
+
+
 
