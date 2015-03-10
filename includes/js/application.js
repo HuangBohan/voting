@@ -52,6 +52,8 @@ function initAddCandidateButtons (canTemplate) {
 		var tmp = canTemplate.clone();
 		var canList = $(this).parent().parent().find(".candidate-template");
 		
-		canList.last().after(tmp);
+		if(canList.length < 4) {
+			canList.last().after(tmp);
+		}
 	});
 }
