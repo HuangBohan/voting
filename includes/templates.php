@@ -144,17 +144,17 @@ NEW_POSITION;
 
 	function showNewCandidate() {
 		return <<<NEW_CANDIDATE
-		<div class="col-md-2" style="border: 1px solid #e1e1e8; border-radius: 4px; margin: 0 15px; overflow: hidden;">
+		<div class="candidate-templdate col-md-2" style="border: 1px solid #e1e1e8; border-radius: 4px; margin: 0 15px; overflow: hidden;">
 			<div style="margin: 5px">
 				<img src="includes/image/default.jpg" alt="Profile Image" width=150 height=150>
 			</div>
 			<div class="form-group">
-				<label for="candidate-matric">Candidate Matric</label>
-				<input type="text" class="form-control" id="candidate-candidate">
+				<label for="candidate-matric-0-0">Candidate Matric</label>
+				<input type="text" class="form-control" id="candidate-candidate-0">
 			</div>
 			<div class="form-group">
-			    <label for="candidate-photo">Upload photo</label>
-			    <input type="file" id="candidate-photo">
+			    <label for="candidate-photo-0-0">Upload photo</label>
+			    <input type="file" id="candidate-photo-0">
 			</div>
 		</div>
 NEW_CANDIDATE;
@@ -165,12 +165,14 @@ NEW_CANDIDATE;
 		$addButton = showAddButton("Add new Candidate", "add-candidate");
 		$output = <<<CANDIDATE_ROW
 		<hr>
-		<div class="row">
-			<h3 id="position-name-header" style="text-align: center"></h3>
-		</div>
-		<div class="row">
-			$candidate
-			$addButton
+		<div class="candidate-row-template" id="position-0">
+			<div class="row">
+				<h3 id="position-name-header" style="text-align: center"></h3>
+			</div>
+			<div class="row">
+				$candidate
+				$addButton
+			</div>
 		</div>
 		<hr>
 CANDIDATE_ROW;
