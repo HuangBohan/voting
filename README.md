@@ -1,5 +1,5 @@
 # voting
-Eusoff Hall JCRC Voting System
+Eusoff Hall Election System
 
 ## How to setup
 1. update `includes/config.inc` with your database parameters
