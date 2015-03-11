@@ -15,9 +15,9 @@
 			
 		}
 
-		public function newSession()
+		public function displayAddSession()
 		{
-			
+				
 		}
 	}	
 

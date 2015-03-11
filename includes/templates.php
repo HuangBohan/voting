@@ -71,7 +71,7 @@ FOOTER;
 									<label class="sr-only" for="pwd">Password</label>
 									<input class="form-control" id="pwd" type="password" placeholder="Password">
 								</div>
-								<button type="submit" class="btn btn-default">Login</button>
+								<input type="submit" class="btn btn-default" name="adminLogin" value="Login">
 							</div>
 						</form>	
 					</div>
@@ -185,7 +185,7 @@ CANDIDATE_ROW;
 		$output = <<<NEW_SESSION
 		<div class="row">
 			<div class="col-md-12">
-				<form>
+				<form method=POST>
 					<div class="row">
 						<div class="form-group col-md-6">
 						    <label for="session-name">Session Name</label>
@@ -221,7 +221,7 @@ NEW_SESSION;
 		$output .= showCandidateRow();
 		$output .= <<<NEW_SESSION
 					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
+					<input type="submit" class="btn btn-default" name="newSession" value="Submit">
 				</form>
 			</div>
 		</div>
