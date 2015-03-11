@@ -111,7 +111,8 @@ LOGIN;
 	function showAddButton($label, $class) {
 		return <<<ADD_BUTTON
 		<div class="col-md-2" style="margin: 0 15px">
-			<button class="$class btn btn-default">$label</button>
+			<button class="add-$class btn btn-default">Add $label</button><br><br>
+			<button class="delete-$class btn btn-danger">Delete $label</button>
 		</div>
 ADD_BUTTON;
 	}
@@ -162,7 +163,7 @@ NEW_CANDIDATE;
 
 	function showCandidateRow() {
 		$candidate = showNewCandidate();
-		$addButton = showAddButton("Add new Candidate", "add-candidate");
+		$addButton = showAddButton("Candidate", "candidate");
 		$output = <<<CANDIDATE_ROW
 		<div class="candidate-row-template" id="position-0">
 			<hr>
@@ -214,7 +215,7 @@ CANDIDATE_ROW;
 NEW_SESSION;
 		
 		$output .= showNewPosition();
-		$output .= showAddButton("Add New Position", "add-position");
+		$output .= showAddButton("Position", "position");
 		$output .= "</div>";
 
 		$output .= showCandidateRow();
