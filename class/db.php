@@ -1,174 +1,137 @@
 <?php 
 	
-	require_once __DIR__ . '../includes/config.inc';
+	require_once __DIR__ . '/../includes/config.inc';
 
-	function db_connection() {
+	$db = new DB();
 
-		$con = mysql_connect(DB_HOST,DB_USER,DB_PWD);
-		if (!$con)
-		{   
-			die("Connection failed: " . mysqli_connect_error());
+	class DB
+	{
+
+		//CONNECTION
+		function connect(){
+			$con = new mysqli(DB_HOST,DB_USER,DB_PWD, DB_NAME);
+
+			if ($con->connect_error){   
+				die("Connection failed: " . $con->connect_error);
+			} else {
+				echo "Connect successfully";
+			}
 		}
-		mysql_select_db(DB_NAME, $con);
-		return $con;
-	}
 
-	//INSERTION
-	function insert_resident($r_matric, $r_name, $r_room, $r_photo){
-		$con = db_connection();
+		//INSERTION
+		function insert_resident($r_matric, $r_name, $r_room, $r_photo){
+			$con = new mysqli(DB_HOST,DB_USER,DB_PWD, DB_NAME);
+			if ($con->connect_error){   
+				die("Connection failed: " . $con->connect_error);
+			} else {
+				echo "Connect successfully <br>";
+			}
+
+			$sql = "INSERT INTO resident (r_matric, r_name, r_room, r_photo) VALUES ($r_matric, $r_name, $r_room, $r_photo)";
+
+			if ($con->query($sql)) {
+				echo "New resident created successfully";
+			} else {
+				echo "Error: " . $sql . "<br>" . $con->error;
+			}
+
+			$con->close();
+
+		}
+
+		function insert_session($s_id, $s_name, $s_opendate, $s_closedate){
+			$sql = "INSERT INTO session (s_id, s_name, s_opendate, s_closedate) VALUES ($s_id, $s_name, $s_opendate, $s_closedate)";
+
+			if ($con->query($sql) === TRUE) {
+				echo "New session created successfully";
+			} else {
+				echo "Error: " . $sql . "<br>" . $con->error;
+			}
+		}
+
+		function election_position($p_id, $s_id, $p_slot, $p_name){
+			$sql = "INSERT INTO election_position (p_id, s_id, p_slot, p_name) VALUES ($p_id, $s_id, $p_slot, $p_name)";
+
+			if ($con->query($sql) === TRUE) {
+				echo "New election position created successfully";
+			} else {
+				echo "Error: " . $sql . "<br>" . $con->error;
+			}
+		}
+
+		function election_position_candidate($p_id, $c_matric){
+			$sql = "INSERT INTO position_candidate (p_id, c_matric) VALUES ($p_id, $c_matric)";
+
+			if ($con->query($sql) === TRUE) {
+				echo "New election position candidate created successfully";
+			} else {
+				echo "Error: " . $sql . "<br>" . $con->error;
+			}
+		}
+
+		function insert_statistics($p_id, $c_matric, $r_matric, $st_vote){
+			$sql = "INSERT INTO  statistics (p_id, c_matric, r_matric, st_vote) VALUES ($p_id, $c_matric, $r_matric, $st_vote)";
+
+			if ($con->query($sql) === TRUE) {
+				echo "New statictics created successfully";
+			} else {
+				echo "Error: " . $sql . "<br>" . $con->error;
+			}
+		}
+		//RETRIEVE
+		function get_resident($r_matric){
+			$sql= "SELECT * FROM  resident WHERE r_matric = $r_matric";
+
+			if ($con->query($sql) === TRUE) {
+				echo "resident " . $r_matric . " got successfully";
+			} else {
+				return NULL;
+			}
+
+		}
 		
-		$query = "INSERT INTO " . resident . "(r_matric, r_name, r_room, r_photo) VALUES ($r_matric, $r_name, $r_room, $r_photo)";
-		$result = mysql_query($query);
+		function get_session($s_id){
+			$sql = "SELECT * FROM session WHERE s_id = $s_id" ;
 
-		mysql_close($con);
+			if ($con->query($sql) === TRUE) {
+				echo "session " . $s_id . " got successfully";
+			} else {
+				echo "Error: " . $sql . "<br>" . $con->error;
+			}
 
-		if ($result) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
-	}
-
-	function insert_session($s_id, $s_name, $s_opendate, $s_closedate){
-		$con = db_connection();
-
-		$query = "INSERT INTO " . session . "(s_id, s_name, s_opendate, s_closedate) VALUES ($s_id, $s_name, $s_opendate, $s_closedate)";
-		$result = mysql_query($query);
-
-		mysql_close($con);
-
-		if ($result) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
-	}
-
-	function election_position($p_id, $s_id, $p_slot, $p_name){
-		$con = db_connection();
-
-		$query = "INSERT INTO " . election_position . "(p_id, s_id, p_slot, p_name) VALUES ($p_id, $s_id, $p_slot, $p_name)";
-		$result = mysql_query($query);
-
-		mysql_close($con);
-
-		if ($result) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
-	}
-
-	function election_position_candidate($p_id, $c_matric){
-		$con = db_connection();
-
-		$query = "INSERT INTO " . position_candidate . "(p_id, c_matric) VALUES ($p_id, $c_matric)";
-		$result = mysql_query($query);
-
-		mysql_close($con);
-
-		if ($result) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
-	}
-
-	function insert_statistics($p_id, $c_matric, $r_matric, $st_vote){
-		$con = db_connection();
-
-		$query = "INSERT INTO " . statistics . "(p_id, c_matric, r_matric, st_vote) VALUES ($p_id, $c_matric, $r_matric, $st_vote)";
-		$result = mysql_query($query);
-
-		mysql_close($con);
-
-		if ($result) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
-	}
-	//RETRIEVE
-	function get_resident($r_matric){
-		$con = db_connection();
-
-		$query = "SELECT * FROM " . resident . "WHERE r_matric = $r_matric" ;
-		$result = mysql_query($query);
-
-		mysql_close($con);
-
-		if ($result) {
-			$result = mysql_fetch_array($result);
-			return $result;
-		} else {
-			return NULL;
 		}
 
+		function get_election_position($s_id, $p_id){
+			$sql = "SELECT * FROM election_position WHERE s_id = $s_id and p_id = $p_id" ;
+
+			if ($con->query($sql) === TRUE) {
+				echo "election position " . $p_id . " got successfully";
+			} else {
+				echo "Error: " . $sql . "<br>" . $con->error;
+			}
+
+		}
+
+		function get_position_candidate($p_id, $c_matric){
+			$sql = "SELECT * FROM position_candidate WHERE p_id = $p_id and c_matric = $c_matric" ;
+
+			if ($con->query($sql) === TRUE) {
+				echo "position candidate  " . $c_matric . " got successfully";
+			} else {
+				echo "Error: " . $sql . "<br>" . $con->error;
+			}
+		}
+
+		function get_statictics($p_id, $c_matric){
+			$sql = "SELECT * FROM statistics WHERE p_id = $p_id and c_matric = $c_matric" ;
+
+			if ($con->query($sql) === TRUE) {
+				echo "statistics " . $p_id . " got successfully";
+			} else {
+				echo "Error: " . $sql . "<br>" . $con->error;
+			}
+		}	
 	}
+
 	
-	function get_session($s_id){
-		$con = db_connection();
-
-		$query = "SELECT * FROM " . session . "WHERE s_id = $s_id" ;
-		$result = mysql_query($query);
-
-		mysql_close($con);
-
-		if ($result) {
-			$result = mysql_fetch_array($result);
-			return $result;
-		} else {
-			return NULL;
-		}
-
-	}
-
-	function get_election_position($s_id, $p_id){
-		$con = db_connection();
-
-		$query = "SELECT * FROM " . election_position . "WHERE s_id = $s_id and p_id = $p_id" ;
-		$result = mysql_query($query);
-
-		mysql_close($con);
-
-		if ($result) {
-			$result = mysql_fetch_array($result);
-			return $result;
-		} else {
-			return NULL;
-		}
-
-	}
-
-	function get_position_candidate($p_id, $c_matric){
-		$con = db_connection();
-
-		$query = "SELECT * FROM " . position_candidate . "WHERE p_id = $p_id and c_matric = $c_matric" ;
-		$result = mysql_query($query);
-
-		mysql_close($con);
-
-		if ($result) {
-			$result = mysql_fetch_array($result);
-			return $result;
-		} else {
-			return NULL;
-		}
-	}
-
-	function get_statictics($p_id, $c_matric){
-		$con = db_connection();
-
-		$query = "SELECT * FROM " . statistics . "WHERE p_id = $p_id and c_matric = $c_matric" ;
-		$result = mysql_query($query);
-
-		mysql_close($con);
-
-		if ($result) {
-			$result = mysql_fetch_array($result);
-			return $result;
-		} else {
-			return NULL;
-		}
-	}
 ?>
