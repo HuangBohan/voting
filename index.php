@@ -8,6 +8,7 @@
 
 	if(isset($_SESSION['USER'])) {
 		echo $_SESSION['USER'];
+		echo $db->insert_resident($_SESSION['USER'], 'TANG NING', 'B407', null);
 	}
 	else if (isset($_SESSION['ADMIN'])) {
 		if(isset($_POST['newSession']))

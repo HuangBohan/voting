@@ -1,42 +1,29 @@
 <?php 
-	
 	require_once __DIR__ . '/../includes/config.inc';
 
 	$db = new DB();
 
 	class DB
 	{
-
+		private $con;
 		//CONNECTION
-		function connect(){
-			$con = new mysqli(DB_HOST,DB_USER,DB_PWD, DB_NAME);
+		function __construct(){
+			$this->con = new mysqli(DB_HOST, DB_USER, DB_PWD, DB_NAME);
 
-			if ($con->connect_error){   
-				die("Connection failed: " . $con->connect_error);
-			} else {
-				echo "Connect successfully";
+			if ($this->con->connect_error){   
+				die("Connection failed: " . $this->con->connect_error);
 			}
 		}
 
 		//INSERTION
 		function insert_resident($r_matric, $r_name, $r_room, $r_photo){
-			$con = new mysqli(DB_HOST,DB_USER,DB_PWD, DB_NAME);
-			if ($con->connect_error){   
-				die("Connection failed: " . $con->connect_error);
-			} else {
-				echo "Connect successfully <br>";
-			}
+			$sql = "INSERT INTO resident (r_matric, r_name, r_room, r_photo) VALUES ('$r_matric', '$r_name', '$r_room', '$r_photo')";
 
-			$sql = "INSERT INTO resident (r_matric, r_name, r_room, r_photo) VALUES ($r_matric, $r_name, $r_room, $r_photo)";
-
-			if ($con->query($sql)) {
+			if ($this->con->query($sql)) {
 				echo "New resident created successfully";
 			} else {
-				echo "Error: " . $sql . "<br>" . $con->error;
+				echo "Error: " . $sql . "<br>" . $this->con->error;
 			}
-
-			$con->close();
-
 		}
 
 		function insert_session($s_id, $s_name, $s_opendate, $s_closedate){
