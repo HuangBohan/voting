@@ -14,7 +14,7 @@ function get_votes_candidate($p_id, $c_matric)           get the number of votes
 //DELETION
 function delete_all_candidate_statistics($c_matric)              delete all statistics related to candidate $c_matric
 function delete_statistics($p_id, $c_matric, $r_matric)   	delete specific statistic
-function delete_all_candidate($p_id)                	                  delete all candidate for position $p_id
+function delete_all_candidates($p_id)                	                  delete all candidate for position $p_id
 function delete_position_candidate($p_id,$c_matric)           delete candidate $c_matric from position $p_id
 function delete_position($s_id, $p_id)                                 delete position $p_id from session $s_id
 function delete_all_position($s_id)                                       delete all positions for session $s_id
