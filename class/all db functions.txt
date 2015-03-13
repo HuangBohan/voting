@@ -1,0 +1,21 @@
+//INSERTION
+function insert_resident($r_matric, $r_name, $r_room, $r_photo)
+function insert_session($s_id, $s_name, $s_opendate, $s_closedate)
+function insert_election_position($p_id, $s_id, $p_slots, $p_name)
+function insert_position_candidate($p_id, $c_matric)
+function insert_statistics($p_id, $c_matric, $r_matric, $st_vote)
+
+//SELECTION
+function select_all_positions($s_id)                              select all positions for session $s_id
+function select_all_candidates($p_id)                           select all candidates for position $p_id
+function select_all_statistics($p_id,$c_matric)               select all statistics that support candidate $c_matric in position $p_id
+function get_votes_candidate($p_id, $c_matric)           get the number of votes  candidate $c_matric get for position $p_id
+
+//DELETION
+function delete_all_candidate_statistics($c_matric)              delete all statistics related to candidate $c_matric
+function delete_statistics($p_id, $c_matric, $r_matric)   	delete specific statistic
+function delete_all_candidate($p_id)                	                  delete all candidate for position $p_id
+function delete_position_candidate($p_id,$c_matric)           delete candidate $c_matric from position $p_id
+function delete_position($s_id, $p_id)                                 delete position $p_id from session $s_id
+function delete_all_position($s_id)                                       delete all positions for session $s_id
+function delete_session($s_id)                                             delete session $s_id
