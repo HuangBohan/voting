@@ -38,7 +38,8 @@
 			}
 		}
 
-		function insert_session($s_id, $s_name, $s_opendate, $s_closedate){
+		function insert_session($s_name, $s_opendate, $s_closedate){
+			$s_id = $this->generate_random_sid();
 			$stmt = $this->con->prepare("INSERT INTO session (s_id, s_name, s_opendate, s_closedate) VALUES (?, ?, ?, ?)");
 			$stmt->bind_param('ssss',$s_id, $s_name, $s_opendate, $s_closedate);
 			$sql = "INSERT INTO session (s_id, s_name, s_opendate, s_closedate) VALUES ('$s_id', '$s_name', '$s_opendate', '$s_closedate')";
