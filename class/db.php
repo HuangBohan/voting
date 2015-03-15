@@ -61,7 +61,9 @@
 			}
 		}
 
-		function insert_election_position($p_id, $s_id, $p_slots, $p_name){
+		function insert_election_position($s_id, $p_slots, $p_name){
+			$p_id = $this->con->insert_id;
+			//cho $p_id;
 			$stmt = $this->con->prepare("INSERT INTO election_position (p_id, s_id, p_slots, p_name) VALUES (?, ?, ?, ?)");
 			$stmt->bind_param('isis',$p_id, $s_id, $p_slots, $p_name);
 			$sql = "INSERT INTO election_position (p_id, s_id, p_slots, p_name) VALUES ('$p_id', '$s_id', '$p_slots', '$p_name')";
@@ -73,7 +75,6 @@
 				//echo "Error: " . $sql . "<br>" . $this->con->error;
 				return false;
 			}
-			
 		}
 
 		function insert_position_candidate($p_id, $c_matric){
