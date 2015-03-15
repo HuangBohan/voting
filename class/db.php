@@ -14,6 +14,16 @@
 				die("Connection failed: " . $this->con->connect_error);
 			}
 		}
+		
+		//GENERATE RANDOM sid
+		function generate_random_sid(){
+			$characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+			$s_id = '';
+			for ($i = 0; $i < 5; $i++) {
+      				$s_id .= $characters[rand(0, strlen($characters) - 1)];
+ 			}
+ 			return $s_id;
+		}
 
 		//INSERTION (ALL PASSED)
 		function insert_resident($r_matric, $r_name, $r_room, $r_photo){
