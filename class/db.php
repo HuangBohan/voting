@@ -14,14 +14,19 @@
 				die("Connection failed: " . $this->con->connect_error);
 			}
 		}
-		
-		//GENERATE RANDOM sid
+
+		//GENERATE RANDOM $s_id
 		function generate_random_sid(){
-			$characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-			$s_id = '';
-			for ($i = 0; $i < 5; $i++) {
+			$characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			$exist = true;
+			while($exist){
+				$s_id = '';
+				for ($i = 0; $i < 5; $i++) {
       				$s_id .= $characters[rand(0, strlen($characters) - 1)];
- 			}
+ 				}
+ 				$exist = $this->select_session($s_id);
+			}
+
  			return $s_id;
 		}
 
@@ -32,10 +37,13 @@
 			$sql = "INSERT INTO resident (r_matric, r_name, r_room, r_photo) VALUES ('$r_matric', '$r_name', '$r_room', '$r_photo')";
 
 			if ($stmt->execute()) {
-				echo "New resident created successfully <br>";
+				//echo "New resident created successfully <br>";
+				return true;
 			} else {
-				echo "Error: " . $sql . "<br>" . $this->con->error;
+				//echo "Error: " . $sql . "<br>" . $this->con->error;
+				return false;
 			}
+
 		}
 
 		function insert_session($s_name, $s_opendate, $s_closedate){
@@ -45,9 +53,11 @@
 			$sql = "INSERT INTO session (s_id, s_name, s_opendate, s_closedate) VALUES ('$s_id', '$s_name', '$s_opendate', '$s_closedate')";
 
 			if ($stmt->execute()) {
-				echo "New session created successfully <br>";
+				//echo "New session created successfully <br>";
+				return true;			
 			} else {
-				echo "Error: " . $sql . "<br>" . $this->con->error;
+				//echo "Error: " . $sql . "<br>" . $this->con->error;
+				return false;
 			}
 		}
 
@@ -57,9 +67,11 @@
 			$sql = "INSERT INTO election_position (p_id, s_id, p_slots, p_name) VALUES ('$p_id', '$s_id', '$p_slots', '$p_name')";
 		
 			if ($stmt->execute()) {
-				echo "New election position created successfully <br>";
+				//echo "New election position created successfully <br>";
+				return true;
 			} else {
-				echo "Error: " . $sql . "<br>" . $this->con->error;
+				//echo "Error: " . $sql . "<br>" . $this->con->error;
+				return false;
 			}
 			
 		}
@@ -70,9 +82,11 @@
 			$sql = "INSERT INTO position_candidate (p_id, c_matric) VALUES ('$p_id', '$c_matric')";
 
 			if ($stmt->execute()) {
-				echo "New election position candidate created successfully <br>";
+				//echo "New election position candidate created successfully <br>";
+				return true;
 			} else {
-				echo "Error: " . $sql . "<br>" . $this->con->error;
+				//echo "Error: " . $sql . "<br>" . $this->con->error;
+				return false;
 			}
 		}
 
@@ -82,13 +96,34 @@
 			$sql = "INSERT INTO  statistics (p_id, c_matric, r_matric, st_vote) VALUES ('$p_id', '$c_matric', '$r_matric', '$st_vote')";
 
 			if ($stmt->execute()) {
-				echo "New statistics created successfully <br>";
+				//echo "New statistics created successfully <br>";
+				return true;
 			} else {
-				echo "Error: " . $sql . "<br>" . $this->con->error;
+				//echo "Error: " . $sql . "<br>" . $this->con->error;
+				return false;
 			}
 		}
 
-		//SELECT		
+		//SELECT
+
+		function select_session($s_id){
+			$stmt = $this->con->prepare("SELECT s_id FROM session WHERE s_id = ?");
+			$stmt->bind_param('s',$s_id);
+			$result = array();
+			if($stmt->execute()){
+				$stmt->bind_result($row);
+    			while ($stmt->fetch()) {
+        			array_push($result, $row);
+    			}
+			}
+			$len = count($result);
+			if($len > 0){
+				return true;
+			} else {
+				return false;
+			}
+		}
+
 		function select_all_positions($s_id){
 			$stmt = $this->con->prepare("SELECT p_id FROM election_position WHERE s_id = ?");
 			$stmt->bind_param('s',$s_id);
@@ -151,7 +186,7 @@
 
 				return count($result);
 			} else {
-				echo "Error: " . $sql . "<br>" . $con->error;
+				//echo "Error: " . $sql . "<br>" . $con->error;
 				return NULL;
 			}
 		}
@@ -176,9 +211,11 @@
 			$sql = "DELETE FROM statistics WHERE p_id = $p_id and c_matric = '$c_matric'" ;
 
 			if ($stmt->execute()) {
-				echo "statistics deleted successfully <br>";
+				//echo "statistics deleted successfully <br>";
+				return true;
 			} else {
-				echo "Error: " . $sql . "<br>" . $con->error;
+				//echo "Error: " . $sql . "<br>" . $con->error;
+				return false;
 			}
 		}
 
@@ -188,9 +225,11 @@
 			$sql = "DELETE FROM statistics WHERE p_id = $p_id and c_matric = '$c_matric' and r_matric = '$r_matric'" ;
 
 			if ($stmt->execute()) {
-				echo "statistics deleted successfully <br>";
+				return true;
+				//echo "statistics deleted successfully <br>";
 			} else {
-				echo "Error: " . $sql . "<br>" . $con->error;
+				return false;
+				//echo "Error: " . $sql . "<br>" . $con->error;
 			}
 		}
 		/*
@@ -217,9 +256,11 @@
 			$sql = "DELETE FROM position_candidate WHERE p_id = '$p_id'";
 
 			if ($stmt->execute()) {
-				echo "position candidate  " . $p_id . " deleted successfully <br>";
+				return true;
+				//echo "position candidate  " . $p_id . " deleted successfully <br>";
 			} else {
-				echo "Error: " . $sql . "<br>" . $con->error;
+				return false;
+				//echo "Error: " . $sql . "<br>" . $con->error;
 			}
 		}
 
@@ -230,9 +271,11 @@
 			$sql = "DELETE FROM position_candidate WHERE p_id = '$p_id' and c_matric = 'c_matric'";
 
 			if ($stmt->execute()) {
-				echo "position candidate  " . $c_matric . " deleted successfully <br>";
+				return true;
+				//echo "position candidate  " . $c_matric . " deleted successfully <br>";
 			} else {
-				echo "Error: " . $sql . "<br>" . $this->con->error;
+				return false;
+				//echo "Error: " . $sql . "<br>" . $this->con->error;
 			}
 		}
 		/*
@@ -258,9 +301,11 @@
 			$sql = "DELETE FROM election_position WHERE s_id = '$s_id' and p_id = '$p_id'" ;
 
 			if ($stmt->execute()) {
-				echo "election position " . $p_id . " deleted successfully <br>";
+				return true;
+				//echo "election position " . $p_id . " deleted successfully <br>";
 			} else {
-				echo "Error: " . $sql . "<br>" . $con->error;
+				return false;
+				//echo "Error: " . $sql . "<br>" . $con->error;
 			}
 		}
 
@@ -274,9 +319,11 @@
 			$sql = "DELETE FROM election_position WHERE s_id = '$s_id'" ;
 
 			if ($stmt->execute()) {
-				echo "election position " . $s_id . " deleted successfully <br>";
+				return true;
+				//echo "election position " . $s_id . " deleted successfully <br>";
 			} else {
-				echo "Error: " . $sql . "<br>" . $con->error;
+				return false;
+				//echo "Error: " . $sql . "<br>" . $con->error;
 			}
 		}
 		/*
@@ -300,9 +347,11 @@
 			$sql = "DELETE FROM session WHERE s_id = '$s_id'" ;
 
 			if ($stmt->execute()) {
-				echo "session " . $s_id . " deleted successfully <br>";
+				return true;
+				//echo "session " . $s_id . " deleted successfully <br>";
 			} else {
-				echo "Error: " . $sql . "<br>" . $this->con->error;
+				return false;
+				//echo "Error: " . $sql . "<br>" . $this->con->error;
 			}
 
 		}
@@ -317,7 +366,8 @@
 					WHERE r_matric = '$r_matric'";
 
 			if ($this->con->query($sql)) {
-				echo "New resident updated successfully <br>";
+				//echo "New resident updated successfully <br>";
+				return true;
 			} else {
 				echo "Error: " . $sql . "<br>" . $this->con->error;
 			}
@@ -330,8 +380,9 @@
 					WHERE s_id = '$s_id'";
 
 			if ($this->con->query($sql)) {
-				echo "New session updated successfully <br>";
-			} else {
+				echo "New session updated successfully <br>";//
+
+return true;			} else {
 				echo "Error: " . $sql . "<br>" . $this->con->error;
 			}
 		}
@@ -355,7 +406,8 @@
 					WHERE p_id = '$p_id', c_matric = '$c_matric', r_matric = '$r_matric'";
 
 			if ($this->con->query($sql)) {
-				echo "New statistics updated successfully <br>";
+				//echo "New statistics updated successfully <br>
+				return true;";
 			} else {
 				echo "Error: " . $sql . "<br>" . $this->con->error;
 			}
