@@ -389,6 +389,22 @@ return true;			} else {
 			}
 		}
 		*/
+		function update_resident_photo($r_matric, $r_photo){
+			$stmt = $this->con->prepare("UPDATE resident 
+										SET r_photo = ?
+										WHERE r_matric = ?");
+
+			$stmt->bind_param('ss',$r_photo, $r_matric);
+
+			if ($stmt->execute()) {
+				return true;
+				//echo "session " . $s_id . " deleted successfully <br>";
+			} else {
+				return false;
+				//echo "Error: " . $sql . "<br>" . $this->con->error;
+			}
+		}
+		
 		function update_election_position($s_id, $old_p_id, $new_p_id, $p_slots, $p_name){
 			$this->delete_position($s_id, $old_p_id);
 			$this->insert_election_position($new_p_id,$s_id,$p_slots,$p_name);
